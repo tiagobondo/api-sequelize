@@ -15,17 +15,34 @@ router.get('/', (req, res) => {
 router.post('/', async (req, res) => {
   const { userName, password } = req.body
 
-  const response = await User.create({
-    userName: userName,
-    password: password
-  })
+  try {
+    const data = await User.create({
+      userName,
+      password
+    })
+    const response = await data.save()
 
-  //console.log(response instanceof User)
-  //console.log(response.userName)
+    if (!response) {
+      return res
+        .send({ message: 'Erro ao cadastrar!' })
+        .status(401)
+    } else {
+      return res
+        .send({ message: 'Sucess!' })
+        .status(200)
+    }
+  } catch (error) {
+    return res
+      .send({ message: 'Erro interno no servidor', error })
+      .status(500)
+  }
+})
 
-  await response.save()
-
-  return res.send({ message: 'OK' }).status(200)
+router.get('/users', async (req, res) => {
+  const data = await User.findAll({ /*order:[[ 'id','DESC' ]], */ })
+  return res
+    .send({ data: data })
+    .status(200)
 })
 
 export default router

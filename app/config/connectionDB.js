@@ -1,11 +1,14 @@
 import { Sequelize } from 'sequelize'
+import dotenv from 'dotenv'
 
-const seq = new Sequelize({
-  host: 'localhost',
-  username: 'root',
-  database: 'api-sequileze',
-  password: '',
-  dialect: 'mysql'
+dotenv.config()
+
+export const seq = new Sequelize({
+  host: process.env.HOST,
+  username: process.env.USER_NAME,
+  database: process.env.DATABASE,
+  password: process.env.PASSWORD,
+  dialect: process.env.DIALECT
 })
 
 export const connection = async () => {

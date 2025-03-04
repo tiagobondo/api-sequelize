@@ -1,15 +1,7 @@
-import { Sequelize, DataTypes } from 'sequelize'
-
-const seq = new Sequelize({
-  host: 'localhost',
-  username: 'root',
-  database: 'api-sequileze',
-  password: '',
-  dialect: 'mysql'
-})
+import { DataTypes } from 'sequelize'
+import { seq } from '../config/connectionDB.js'
 
 export const User = seq.define('User', {
-
   id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
@@ -22,11 +14,11 @@ export const User = seq.define('User', {
   },
 
   password: {
-    type: DataTypes.STRING
+    type: DataTypes.STRING,
+    allowNUll: false
   },
 },
-
   {
-    timestamps: false
+    timestamps: true
   }
 )
